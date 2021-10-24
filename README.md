@@ -1,6 +1,6 @@
 # Royale-OfficeAddIn
 
-A library for Apache Royale Framework (https://royale.apache.org) that wraps the Office JavaScript API library (https://docs.microsoft.com/en-us/office/dev/add-ins/develop/understanding-the-javascript-api-for-office). Office JavaScript API, designed on JavaScript and HTML5 technologies, is a robust set of components for interacting with Office. *Note*: at the time of writing thid document, Office JavaScript API can be used with Excel, Outlook, Word, PowerPoint and OneNote however this Royale-OfficeAddIn was tested only with Word.
+A library for Apache Royale Framework (https://royale.apache.org) that wraps the Office JavaScript API library (https://docs.microsoft.com/en-us/office/dev/add-ins/develop/understanding-the-javascript-api-for-office). Office JavaScript API, designed on JavaScript and HTML5 technologies, is a robust set of components for interacting with Office. *Note*: at the time of writing this document, Office JavaScript API can be used with Excel, Outlook, Word, PowerPoint and OneNote however this Royale-OfficeAddIn was tested only with Word.
 
 Usage (insert text)
 ````actionscript
