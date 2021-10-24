@@ -1,11 +1,11 @@
 # Royale-OfficeAddIn
 
-A library for Apache Royale Framework (https://royale.apache.org) that wraps the Office JavaScript API library (https://docs.microsoft.com/en-us/office/dev/add-ins/develop/understanding-the-javascript-api-for-office). Office JavaScript API, designed on JavaScript and HTML5 technologies, is a robust set of components for interacting with Office. *Note*: at the time of writing this document, Office JavaScript API can be used with Excel, Outlook, Word, PowerPoint and OneNote however this Royale-OfficeAddIn was tested only with Word.
+A library for the Apache Royale Framework (https://royale.apache.org) that wraps the Office JavaScript API library (https://docs.microsoft.com/en-us/office/dev/add-ins/develop/understanding-the-javascript-api-for-office). The Office JavaScript API, designed on JavaScript and HTML5 technologies, is a robust set of components for interacting with Microsoft Office. *Note*: at the time of writing this document, the Office JavaScript API can be used with Excel, Outlook, Word, PowerPoint and OneNote however this Royale-OfficeAddIn was tested only with Word.
 
-Before start, make sure that you read Office Web Add-In documentation and how to configure it thru manifest file (https://docs.microsoft.com/en-us/office/dev/add-ins/develop/add-in-manifests).
-It's not the intention with this repository explain how the Office Web Add-In works.
+Before starting, make sure that you read the Office Web Add-In documentation and know how to configure it thru a manifest file (https://docs.microsoft.com/en-us/office/dev/add-ins/develop/add-in-manifests).
+It's not the intention of this repository to explain how the Office Web Add-In works.
 
-You need to manually insert the reference to office.js on your Royale template before ${head} (currently I didn't find a better solution)
+You need to manually insert a reference to office.js in your Royale template before ${head} (I have not found a better solution yet).
 ````html
 <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
 `````
