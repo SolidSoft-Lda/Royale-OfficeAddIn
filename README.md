@@ -36,6 +36,11 @@ Usage (find and replace)
 OfficeAddIn.findAndReplace("World", "Planet");
 `````
 
+Usage (undo find and replace)
+````actionscript
+OfficeAddIn.undoFindAndReplace();
+`````
+
 Usage (get the document as PDF/A byte array)
 ````actionscript
 OfficeAddIn.getDocumentAsPDF().then(function(result:ByteArray):IThenable 

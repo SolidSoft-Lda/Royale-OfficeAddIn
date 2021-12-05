@@ -27,6 +27,8 @@ package
 
 		public static function findAndReplace(toFind:String, toReplace:String):void {}
 
+		public static function undoFindAndReplace():void {}
+
 		public static function getDocumentAsPDF():Promise { return null; }
 	}
 }

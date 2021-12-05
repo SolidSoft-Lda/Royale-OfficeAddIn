@@ -3,6 +3,8 @@ window.onload = function()
     Office.initialize = function () { };
 }
 
+var findAndReplaceStackTrace = [];
+
 class OfficeAddIn
 {
     static insertText(text)
@@ -40,11 +42,31 @@ class OfficeAddIn
             {
                 for (var i = 0; i < results.items.length; i++)
                 {
+                    findAndReplaceStackTrace.push([toFind, toReplace]);
                     results.items[i].insertHtml(toReplace, "replace");
                 }
             })
-            .then(context.sync)
-        });        
+            .then(context.sync);
+        });
+    }
+
+    static undoFindAndReplace()
+    {
+        Word.run(function (context)
+        {
+            var item = findAndReplaceStackTrace.shift();
+            var results = context.document.body.search(item[1]);
+            context.load(results);
+         
+            return context.sync().then(function ()
+            {
+                results.items[0].insertHtml(item[0], "replace");
+
+                if (findAndReplaceStackTrace.length > 0)
+                    OfficeAddIn.undoFindAndReplace();
+            })
+            .then(context.sync);
+        });
     }
 
     static getDocumentAsPDF()
