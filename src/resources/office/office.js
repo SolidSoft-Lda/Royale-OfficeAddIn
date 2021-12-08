@@ -1,9 +1,9 @@
+var documentSnapshot;
+
 window.onload = function()
 {
     Office.initialize = function () { };
 }
-
-var findAndReplaceStackTrace = [];
 
 class OfficeAddIn
 {
@@ -31,41 +31,74 @@ class OfficeAddIn
         })
     }
 
-    static findAndReplace(toFind, toReplace)
-    {
-        Word.run(function (context)
+    static existText(toFind)
+    { 
+        return new Promise((resolve) =>
         {
-            var results = context.document.body.search(toFind);
-            context.load(results);
-         
-            return context.sync().then(function ()
+            Word.run(function (context)
             {
-                for (var i = 0; i < results.items.length; i++)
+                var results = context.document.body.search(toFind);
+                context.load(results, "no-properties-needed");
+             
+                return context.sync().then(function ()
                 {
-                    findAndReplaceStackTrace.push([toFind, toReplace]);
-                    results.items[i].insertHtml(toReplace, "replace");
-                }
-            })
-            .then(context.sync);
+                    resolve(results.items.length > 0 ? toFind : null);
+                });
+            });
         });
     }
 
-    static undoFindAndReplace()
+    static async saveSnapshot()
     {
-        Word.run(function (context)
+        await Word.run(function (context)
         {
-            var item = findAndReplaceStackTrace.shift();
-            var results = context.document.body.search(item[1]);
-            context.load(results);
-         
+            var bodyOOXML = context.document.body.getOoxml();
             return context.sync().then(function ()
             {
-                results.items[0].insertHtml(item[0], "replace");
+                documentSnapshot = bodyOOXML.value;
+            });
+        });
+    }
 
-                if (findAndReplaceStackTrace.length > 0)
-                    OfficeAddIn.undoFindAndReplace();
-            })
-            .then(context.sync);
+    static async restoreSnapshot()
+    {
+        if (documentSnapshot != null)
+        {
+            await Word.run(function (context)
+            {
+                var body = context.document.body;
+                body.clear();
+                body.insertOoxml(documentSnapshot, Word.InsertLocation.start);
+                return context.sync();
+            });
+        }
+    }
+
+    static findAndReplace(toFind, toReplace)
+    {
+        return new Promise((resolve) =>
+        {
+            Word.run(function (context)
+            {
+                var results = context.document.body.search(toFind);
+                context.load(results, "no-properties-needed");
+             
+                return context.sync().then(function ()
+                {
+                    for (var i = 0; i < results.items.length; i++)
+                    {
+                        if (toReplace == null || toReplace == "")
+                            results.items[i].insertHtml(" ", "replace");
+                        else
+                            results.items[i].insertHtml(toReplace, "replace");
+                    }
+                })
+                .then(function ()
+                {
+                    context.sync();
+                    resolve(true);
+                });
+            });
         });
     }
 
@@ -75,9 +108,6 @@ class OfficeAddIn
         {
             Office.context.document.getFilePropertiesAsync(function (asyncResult)
             {
-                if (!asyncResult.value.url)
-                    reject("FILE_NOT_SAVED");
-
                 Office.context.document.getFileAsync(Office.FileType.Pdf, function (result)
                 {
                     if (result.status != Office.AsyncResultStatus.Succeeded)
@@ -94,7 +124,14 @@ class OfficeAddIn
                         if (result.status == Office.AsyncResultStatus.Succeeded)
                         {
                             if (result.value.data)
-                                resolve(result.value.data);
+                            {
+                                var base64String = "";
+                                for (var i = 0; i < result.value.data.length; i++)
+                                {
+                                    base64String += String.fromCharCode(result.value.data[i]);
+                                }
+                                resolve(btoa(base64String));
+                            }
 
                             state.counter++;
                             if (state.counter <= state.sliceCount)

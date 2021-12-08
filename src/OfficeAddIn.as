@@ -25,9 +25,13 @@ package
 
 		public static function insertImage(base64Image:String):void {}
 
-		public static function findAndReplace(toFind:String, toReplace:String):void {}
+		public static function existText(toFind:String):Promise { return null; }
 
-		public static function undoFindAndReplace():void {}
+		public static function saveSnapshot():void {}
+
+		public static function restoreSnapshot():void {}
+
+		public static function findAndReplace(toFind:String, toReplace:String):Promise { return null; }
 
 		public static function getDocumentAsPDF():Promise { return null; }
 	}
