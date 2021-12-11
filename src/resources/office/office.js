@@ -7,6 +7,11 @@ window.onload = function()
 
 class OfficeAddIn
 {
+    static getDefaultLanguage()
+    {
+        return Office.context.displayLanguage;
+    }
+
     static insertText(text)
     {
         Office.context.document.setSelectedDataAsync(text);

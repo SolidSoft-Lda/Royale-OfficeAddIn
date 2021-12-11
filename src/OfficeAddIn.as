@@ -17,6 +17,8 @@ package
 		 */
 		public function OfficeAddIn(){}
 
+		public static function getDefaultLanguage():String { return null; }
+
 		public static function insertText(text:String):void {}
 
 		public static function insertHtml(html:String):void {}
