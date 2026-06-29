@@ -1,3 +1,9 @@
+[![Not Maintained](https://img.shields.io/badge/Maintenance%20Level-Not%20Maintained-yellow.svg)](https://gist.github.com/cheerfulstoic/d107229326a01ff0f333a1d3476e068d)
+
+# Note from the maintainer
+I moved to other technologies, so it fulfilled the purpose and I don't need it any more and it will not receive any more updates.
+You can forke if you want.
+
 # Royale-OfficeAddIn
 
 A library for the Apache Royale Framework (https://royale.apache.org) that wraps the Office JavaScript API library (https://docs.microsoft.com/en-us/office/dev/add-ins/develop/understanding-the-javascript-api-for-office). The Office JavaScript API, designed on JavaScript and HTML5 technologies, is a robust set of components for interacting with Microsoft Office. *Note*: at the time of writing this document, the Office JavaScript API can be used with Excel, Outlook, Word, PowerPoint and OneNote however this Royale-OfficeAddIn was tested only with Word.
